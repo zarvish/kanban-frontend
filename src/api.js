@@ -1,59 +1,7 @@
-// // Mock API for demo purposes
-//
-// const dummyTasks = [
-//     { _id: "1", title: "Task 1", description: "Description of Task 1", status: "todo" },
-//     { _id: "2", title: "Task 2", description: "Description of Task 2", status: "in-progress" },
-//     { _id: "3", title: "Task 3", description: "Description of Task 3", status: "completed" },
-// ];
-//
-// export const fetchTasks = () =>
-//     new Promise((resolve) => {
-//         setTimeout(() => {
-//             resolve({ data: dummyTasks });
-//         }, 500); // Simulate network delay
-//     });
-//
-// export const addTask = (task) =>
-//     new Promise((resolve) => {
-//         setTimeout(() => {
-//             const newTask = { ...task, _id: Date.now().toString() };
-//             dummyTasks.push(newTask);
-//             resolve({ data: newTask });
-//         }, 500);
-//     });
-//
-// export const updateTask = (id, updatedTask) =>
-//     new Promise((resolve, reject) => {
-//         setTimeout(() => {
-//             const index = dummyTasks.findIndex((task) => task._id === id);
-//             if (index !== -1) {
-//                 dummyTasks[index] = { ...dummyTasks[index], ...updatedTask };
-//                 resolve({ data: dummyTasks[index] });
-//             } else {
-//                 reject(new Error("Task not found"));
-//             }
-//         }, 500);
-//     });
-//
-// export const deleteTask = (id) =>
-//     new Promise((resolve, reject) => {
-//         setTimeout(() => {
-//             const index = dummyTasks.findIndex((task) => task._id === id);
-//             if (index !== -1) {
-//                 const deletedTask = dummyTasks.splice(index, 1);
-//                 resolve({ data: deletedTask });
-//             } else {
-//                 reject(new Error("Task not found"));
-//             }
-//         }, 500);
-//     });
-
-
-
 // api.js
 import axios from 'axios';
 
-const apiUrl = "http://localhost:8000/api"; // Replace with your actual API URL
+const apiUrl = "https://kanban-backend-w6fo.onrender.com/api"; // Replace with your actual API URL
 
 // Fetch all tasks
 export const fetchTasks = async () => {

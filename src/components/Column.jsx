@@ -14,7 +14,6 @@ const Column = ({ status, tasks, setTasks }) => {
 
         try {
             await updateTaskStatus(task._id, newStatus);
-            console.log("Task updated successfully");
         } catch (error) {
             console.log("Error while updating task status:", error);
 
@@ -34,7 +33,6 @@ const Column = ({ status, tasks, setTasks }) => {
             await deleteTask(taskId);
             // Remove the task from the local state after deletion
             setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
-            console.log("Task deleted successfully");
         } catch (error) {
             console.error("Error deleting task:", error);
             alert("Failed to delete task. Please try again.");
@@ -46,10 +44,6 @@ const Column = ({ status, tasks, setTasks }) => {
         drop: (item) => moveTask(item, status),
     }));
 
-    useEffect(() => {
-        console.log("Tasks in column:", tasks);
-    }, [tasks]);
-
     return (
         <div
             ref={dropRef}
@@ -57,7 +51,7 @@ const Column = ({ status, tasks, setTasks }) => {
         >
             <h2 className="text-xl font-bold mb-4">{status.toUpperCase()}</h2>
             <div className="space-y-4 overflow-y-auto max-h-[calc(100vh-150px)]">
-                {tasks.length > 0 ? (
+                {tasks?.length > 0 ? (
                     tasks.map((task) => (
                         <TaskCard
                             key={task._id}
