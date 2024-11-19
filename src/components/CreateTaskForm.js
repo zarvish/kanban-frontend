@@ -1,32 +1,21 @@
 // CreateTaskForm.js
 import React, { useState } from "react";
-import { createTask } from "../api"; // Import API call to create task
+import {createTask, fetchTasks} from "../api"; // Import API call to create task
 
-const CreateTaskForm = ({ setTasks, closeModal }) => {
+const CreateTaskForm = ({ setTasks, closeModal,loadTasks }) => {
     const [title, setTitle] = useState("");
     const [status, setStatus] = useState("todo"); // Default to "todo"
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Optimistically update the task list with the new task
+        // // Optimistically update the task list with the new task
         const newTask = { title, status };
-
-        // Optimistic task update: Update state immediately
-        setTasks((prevTasks) => [
-            ...prevTasks,
-            { ...newTask, _id: Date.now() } // Add a temporary _id for UI rendering
-        ]);
 
         try {
             // Call API to create the task
-            const createdTask = await createTask(newTask);
-            // Replace the temporary _id with the real one returned from the API
-            setTasks((prevTasks) =>
-                prevTasks.map((task) =>
-                    task._id === newTask._id ? { ...task, _id: createdTask._id } : task
-                )
-            );
+            await createTask(newTask);
+            loadTasks()
             closeModal(); // Close modal after task creation
         } catch (error) {
             console.error("Error creating task:", error);

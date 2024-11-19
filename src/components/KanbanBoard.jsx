@@ -8,12 +8,12 @@ import { fetchTasks, createTask } from "../api"; // Fetch tasks from the API
 const KanbanBoard = () => {
     const [tasks, setTasks] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
+    const loadTasks = async () => {
+        const response = await fetchTasks();
+        setTasks(response?.data?.response?.data); // Setting the tasks fetched from the API
+    };
 
     useEffect(() => {
-        const loadTasks = async () => {
-            const response = await fetchTasks();
-            setTasks(response.data.response.data); // Setting the tasks fetched from the API
-        };
         loadTasks();
     }, []);
 
@@ -31,6 +31,7 @@ const KanbanBoard = () => {
             // Assuming `createTask` is an API call to create a new task
             const response = await createTask(newTask); // Create new task via API
             const createdTask = response.data.response.data;
+            console.log('created taks',createdTask)
 
             // Optimistically update the tasks array with the newly created task
             setTasks((prevTasks) => [...prevTasks, createdTask]);
@@ -56,6 +57,7 @@ const KanbanBoard = () => {
 
             {/* Modal to create new task */}
             <CreateTaskModal
+                loadTasks={loadTasks}
                 setTasks={setTasks}
                 isOpen={isModalOpen}
                 closeModal={closeModal}
